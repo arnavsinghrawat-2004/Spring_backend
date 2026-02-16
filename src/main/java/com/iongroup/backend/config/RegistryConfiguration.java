@@ -7,6 +7,7 @@ import com.iongroup.library.registry.OperationRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -28,7 +29,10 @@ public class RegistryConfiguration {
                                 Arrays.asList("eligibilityResult"),
                                 "com.iongroup.library.adapter.flowable.CheckEligibilityTask",
                                 "loan",
-                                DelegationType.SERVICE));
+                                DelegationType.SERVICE,
+                                new ArrayList<>(),
+                                Arrays.asList("AMOUNT")
+                        ));
 
                 registry.register(new OperationDescriptor(
                                 "GetLoanPolicy",
