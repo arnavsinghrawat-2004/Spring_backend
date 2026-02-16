@@ -33,17 +33,14 @@ public class DelegationController {
             @PathVariable String type) {
 
         try {
-            DelegationType delegationType =
-                    DelegationType.valueOf(type.toUpperCase());
+            DelegationType delegationType = DelegationType.valueOf(type.toUpperCase());
 
-            List<OperationDescriptor> delegations =
-                    delegationService.getDelegationsByType(delegationType);
+            List<OperationDescriptor> delegations = delegationService.getDelegationsByType(delegationType);
 
             DelegationResponse response = new DelegationResponse(
                     true,
                     "Successfully retrieved " + delegations.size() + " delegations of type " + type,
-                    delegations
-            );
+                    delegations);
 
             return ResponseEntity.ok(response);
 
@@ -54,8 +51,7 @@ public class DelegationController {
                     "Invalid delegation type: " + type +
                             ". Valid types are: SERVICE, SCRIPT, USER_TASK",
                     null,
-                    0
-            );
+                    0);
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 
@@ -65,8 +61,7 @@ public class DelegationController {
                     false,
                     "Error retrieving delegations: " + e.getMessage(),
                     null,
-                    0
-            );
+                    0);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
@@ -80,14 +75,12 @@ public class DelegationController {
 
         try {
 
-            List<OperationDescriptor> delegations =
-                    delegationService.getAllDelegations();
+            List<OperationDescriptor> delegations = delegationService.getAllDelegations();
 
             DelegationResponse response = new DelegationResponse(
                     true,
                     "Successfully retrieved all delegations",
-                    delegations
-            );
+                    delegations);
 
             return ResponseEntity.ok(response);
 
@@ -97,8 +90,7 @@ public class DelegationController {
                     false,
                     "Error retrieving delegations: " + e.getMessage(),
                     null,
-                    0
-            );
+                    0);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
@@ -118,8 +110,7 @@ public class DelegationController {
                     true,
                     "Total delegations count: " + count,
                     null,
-                    count
-            );
+                    count);
 
             return ResponseEntity.ok(response);
 
@@ -129,8 +120,7 @@ public class DelegationController {
                     false,
                     "Error retrieving delegation count: " + e.getMessage(),
                     null,
-                    0
-            );
+                    0);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
@@ -144,31 +134,37 @@ public class DelegationController {
 
         try {
 
-            String[] types = {"SERVICE", "SCRIPT", "USER_TASK"};
+            String[] types = { "SERVICE", "SCRIPT", "USER_TASK" };
             String[] descriptions = {
                     "Java code interacts with other software/external systems",
                     "Task happens in the company system only",
                     "Task is executed on the user end"
             };
 
-            return ResponseEntity.ok(new java.util.HashMap<String, Object>() {{
-                put("success", true);
-                put("message", "Valid delegation types");
-                put("types", types);
-                put("details", new java.util.HashMap<String, String>() {{
-                    put("SERVICE", descriptions[0]);
-                    put("SCRIPT", descriptions[1]);
-                    put("USER_TASK", descriptions[2]);
-                }});
-            }});
+            return ResponseEntity.ok(new java.util.HashMap<String, Object>() {
+                {
+                    put("success", true);
+                    put("message", "Valid delegation types");
+                    put("types", types);
+                    put("details", new java.util.HashMap<String, String>() {
+                        {
+                            put("SERVICE", descriptions[0]);
+                            put("SCRIPT", descriptions[1]);
+                            put("USER_TASK", descriptions[2]);
+                        }
+                    });
+                }
+            });
 
         } catch (Exception e) {
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new java.util.HashMap<String, Object>() {{
-                        put("success", false);
-                        put("message", "Error retrieving delegation types: " + e.getMessage());
-                    }});
+                    .body(new java.util.HashMap<String, Object>() {
+                        {
+                            put("success", false);
+                            put("message", "Error retrieving delegation types: " + e.getMessage());
+                        }
+                    });
         }
     }
 }
